@@ -1,0 +1,18 @@
+type Pelicula {
+    id: ID!
+    titulo: String!
+    duracionMinutos: Int!
+    recaudacionTaquilla: Float!
+    esSaga: Boolean!
+}
+
+type Query {
+    listarPeliculas: [Pelicula]!
+    buscarPeliculaPorId(id: ID!): Pelicula
+}
+
+type Mutation {
+    crearPelicula(id: ID!, titulo: String!, duracionMinutos: Int!, recaudacionTaquilla: Float!, esSaga: Boolean!): Pelicula!
+    actualizarPelicula(id: ID!, titulo: String!, duracionMinutos: Int!, recaudacionTaquilla: Float!, esSaga: Boolean!): Pelicula
+    eliminarPelicula(id: ID!): Boolean!
+}
