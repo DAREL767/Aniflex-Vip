@@ -12,7 +12,15 @@ type Query {
 }
 
 type Mutation {
-    crearPelicula(id: ID!, titulo: String!, duracionMinutos: Int!, recaudacionTaquilla: Float!, esSaga: Boolean!): Pelicula!
-    actualizarPelicula(id: ID!, titulo: String!, duracionMinutos: Int!, recaudacionTaquilla: Float!, esSaga: Boolean!): Pelicula
+    crearPelicula(peliculaInput: PeliculaInput!): Pelicula
+    actualizarPelicula(id: ID!, peliculaInput: PeliculaInput!): Pelicula
     eliminarPelicula(id: ID!): Boolean!
+}
+
+input PeliculaInput {
+    id: ID!
+    titulo: String!
+    duracionMinutos: Int!
+    recaudacionTaquilla: Float!
+    esSaga: Boolean!
 }

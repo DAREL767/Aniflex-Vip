@@ -8,13 +8,13 @@ import org.springframework.stereotype.Controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Controller
 public class PeliculaController {
 
     private final Map<String, Pelicula> peliculasMap = new ConcurrentHashMap<>();
-
 
     @QueryMapping
     public List<Pelicula> listarPeliculas() {
@@ -26,20 +26,21 @@ public class PeliculaController {
         return peliculasMap.get(id);
     }
 
-
     @MutationMapping
-    public Pelicula crearPelicula(@Argument String id,
-                                  @Argument String titulo,
-                                  @Argument int duracionMinutos,
-                                  @Argument double recaudacionTaquilla,
-                                  @Argument boolean esSaga) {
+    public Pelicula crearPelicula(@Argument PeliculaInput peliculaInput) {
+        String id = peliculaInput.getId();
+
+        // Validación de ID duplicado
+        if (peliculasMap.containsKey(id)) {
+            throw new RuntimeException("El ID '" + id + "' ya se encuentra registrado.");
+        }
 
         Pelicula nuevaPelicula = Pelicula.builder()
                 .id(id)
-                .titulo(titulo)
-                .duracionMinutos(duracionMinutos)
-                .recaudacionTaquilla(recaudacionTaquilla)
-                .esSaga(esSaga)
+                .titulo(peliculaInput.getTitulo())
+                .duracionMinutos(peliculaInput.getDuracionMinutos())
+                .recaudacionTaquilla(peliculaInput.getRecaudacionTaquilla())
+                .esSaga(peliculaInput.isEsSaga())
                 .build();
 
         peliculasMap.put(id, nuevaPelicula);
@@ -47,22 +48,17 @@ public class PeliculaController {
     }
 
     @MutationMapping
-    public Pelicula actualizarPelicula(@Argument String id,
-                                       @Argument String titulo,
-                                       @Argument int duracionMinutos,
-                                       @Argument double recaudacionTaquilla,
-                                       @Argument boolean esSaga) {
-
+    public Pelicula actualizarPelicula(@Argument String id, @Argument PeliculaInput peliculaInput) {
         if (!peliculasMap.containsKey(id)) {
             return null;
         }
 
         Pelicula peliculaActualizada = Pelicula.builder()
                 .id(id)
-                .titulo(titulo)
-                .duracionMinutos(duracionMinutos)
-                .recaudacionTaquilla(recaudacionTaquilla)
-                .esSaga(esSaga)
+                .titulo(peliculaInput.getTitulo())
+                .duracionMinutos(peliculaInput.getDuracionMinutos())
+                .recaudacionTaquilla(peliculaInput.getRecaudacionTaquilla())
+                .esSaga(peliculaInput.isEsSaga())
                 .build();
 
         peliculasMap.put(id, peliculaActualizada);
