@@ -4,17 +4,7 @@ type Pelicula {
     duracionMinutos: Int!
     recaudacionTaquilla: Float!
     esSaga: Boolean!
-}
-
-type Query {
-    listarPeliculas: [Pelicula]!
-    buscarPeliculaPorId(id: ID!): Pelicula
-}
-
-type Mutation {
-    crearPelicula(peliculaInput: PeliculaInput!): Pelicula
-    actualizarPelicula(id: ID!, peliculaInput: PeliculaInput!): Pelicula
-    eliminarPelicula(id: ID!): Boolean!
+    fechaEstreno: String!
 }
 
 input PeliculaInput {
@@ -23,4 +13,16 @@ input PeliculaInput {
     duracionMinutos: Int!
     recaudacionTaquilla: Float!
     esSaga: Boolean!
+    fechaEstreno: String!
+}
+
+type Query {
+    listarPeliculas(esSaga: Boolean, titulo: String): [Pelicula]
+    buscarPeliculaPorId(id: ID!): Pelicula
+}
+
+type Mutation {
+    crearPelicula(peliculaInput: PeliculaInput!): Pelicula
+    actualizarPelicula(id: ID!, peliculaInput: PeliculaInput!): Pelicula
+    eliminarPelicula(id: ID!): Boolean
 }

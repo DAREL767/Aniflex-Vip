@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,4 +17,5 @@ public class Pelicula {
     private int duracionMinutos;
     private double recaudacionTaquilla;
     private boolean esSaga;
+    private LocalDateTime fechaEstreno;
 }

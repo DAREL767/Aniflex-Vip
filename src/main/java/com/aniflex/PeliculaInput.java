@@ -13,4 +13,5 @@ public class PeliculaInput {
     private int duracionMinutos;
     private double recaudacionTaquilla;
     private boolean esSaga;
+    private String fechaEstreno;
 }
